@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    stream:
+      default:
+        group: my-consumer-group
+      kafka:
+        binder:
+          brokers:
+            - 127.0.0.1:9092
+        bindings:
+          input:
+            consumer:
+              auto-commit-offset: false
+              configuration:
+                max.poll.interval.ms: 5000 # I use default value. I set it to something shorter so we won't have to wait as long while testing manual_immediate ackmode
+      bindings:
+        input:
+          destination: test-topic
+        output:
+          destination: test-topic
