@@ -7,6 +7,13 @@ spring:
         binder:
           brokers:
             - 127.0.0.1:9092
+          transaction:
+            transaction-id-prefix: tx-id-
+          required-acks: -1
+          consumer-properties:
+            isolation.level: read_committed
+          producer-properties:
+            retries: 2147483647
         bindings:
           input:
             consumer:

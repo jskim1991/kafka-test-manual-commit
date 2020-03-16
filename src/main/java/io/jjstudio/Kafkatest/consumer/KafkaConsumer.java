@@ -12,10 +12,10 @@ public class KafkaConsumer {
     @StreamListener(value = SinkBinding.INPUT)
     public void listen(Message<String> message) throws InterruptedException {
         System.out.println("log this message");
-        Thread.sleep(10000l);
-        // TODO : let us assume I was debugging with a breakpoint for this long
-        // We know this will end up in CommitFailedException because we waited longer than
-        // max.poll.interval.ms, which is set to 5000l just for this example
+        Thread.sleep(6000l);
+        // TODO : let us assume I was debugging with a breakpoint for this long.
+        // This sleep will result in CommitFailedException
+
         sendAck(message);
     }
 
@@ -27,8 +27,8 @@ public class KafkaConsumer {
                 System.out.println("manual commit complete");
                 // put in cache to store my last processed record
             }
-            catch (Exception e) { // TODO : CommitFailedException should be caught with AckMode.MANUAL_IMMEDIATE here
-                throw e; // TODO : insert breakpoint here, it is never caught
+            catch (Exception e) {
+                throw e; // retry
             }
         }
     }
